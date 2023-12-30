@@ -16,6 +16,14 @@ abstract class Model implements ModelInterface {
 
     /** @inheritDoc */
     public function load() {}
+
+    public function __get($k) {
+        throw new \InvalidArgumentException("Invalid property: '{$k}'");
+    }
+
+    public function __set($k, $v) {
+        throw new \InvalidArgumentException("Invalid property: '{$k}'");
+    }
     
     /** @inheritDoc */
     public function validate() {
