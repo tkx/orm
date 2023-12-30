@@ -8,7 +8,11 @@ class RedisOrm extends Orm {
         return $this->getRedis();
     }
 
-    public function getRedis(): \Redis {
+    /**
+     * @return \Redis|\Predis\Client
+     * Any Redis connection with standard commands interface
+     */
+    public function getRedis() {
         return $this->_connection;
     }
 }

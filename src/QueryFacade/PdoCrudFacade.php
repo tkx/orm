@@ -1,11 +1,13 @@
 <?php declare(strict_types=1);
 
 namespace Moteam\Orm\QueryFacade;
+use Moteam\Orm\Contracts\QueryFacadeInterface;
 use Moteam\Orm\Contracts\ModelInterface;
 use Moteam\Orm\Contracts\QueryInterface;
 use Moteam\Orm\Query\PdoSelectQuery;
 use Moteam\Orm\Query\PdoUpsertQuery;
 use Moteam\Orm\Query\PdoDeleteQuery;
+use Moteam\Orm\PdoOrm;
 
 /**
  * PDO backed select, insert, update, delete queries
@@ -22,7 +24,17 @@ use Moteam\Orm\Query\PdoDeleteQuery;
  * delete:
  * $orm(null)(Model::class)("id = ?")(1)();
  */
-class PdoCrudFacade extends PdoQueryFacade {
+class PdoCrudFacade implements QueryFacadeInterface {
+    protected PdoOrm $_orm;
+
+    public function __construct(PdoOrm $orm) {
+        $this->_orm = $orm;
+    }
+
+    public function getOrm(): PdoOrm {
+        return $this->_orm;
+    }
+
     public function __invoke(...$input_all): QueryInterface {
         list($input) = $input_all;
         
